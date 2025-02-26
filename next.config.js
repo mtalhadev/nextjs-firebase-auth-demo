@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  experimental: {
+    appDir: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -10,16 +12,16 @@ const nextConfig = {
       test: /\.js$/,
       include: /node_modules\/undici/,
       use: {
-        loader: 'babel-loader',
+        loader: "babel-loader",
         options: {
-          presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-proposal-private-property-in-object']
-        }
-      }
+          presets: ["@babel/preset-env"],
+          plugins: ["@babel/plugin-proposal-private-property-in-object"],
+        },
+      },
     });
 
     return config;
-  }
+  },
 };
 
 module.exports = nextConfig;

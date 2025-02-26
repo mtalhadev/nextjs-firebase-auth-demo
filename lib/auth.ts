@@ -52,3 +52,17 @@ export const onAuthStateChangedHelper = (
 ) => {
   return onAuthStateChanged(auth, callback);
 };
+
+export async function getUserFromApi(token: string) {
+  const response = await fetch('/api/auth/user', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch user data');
+  }
+
+  return response.json();
+}

@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/firebase";
 import { getAuth } from "firebase-admin/auth";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 
@@ -9,12 +8,12 @@ if (!getApps().length) {
     credential: cert({
       projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
       clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY!.replace(/\\n/g, "\n"),
     }),
   });
 }
 
-export async function GET(request: Request) {
+export const GET = async (request: Request): Promise<Response> => {
   try {
     const authHeader = request.headers.get("Authorization");
 
@@ -32,4 +31,4 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json({ error: "Not authorized" }, { status: 401 });
   }
-}
+};
